@@ -2,6 +2,23 @@
 
 IEEE 802.1CB Frame Replication and Elimination for Reliability (FRER) implementation for NXP GoldVIP (Gold Vehicle Interface Platform) board with SJA1110 TSN switch.
 
+## Repository Contents
+
+```
+├── sja1110_goldvip_switch_frer.bin  # Modified switch configuration
+├── sja1110_goldvip_uc_frer.bin      # Modified UC firmware
+├── sja1110_goldvip_frer.py          # Configuration generator
+├── sja1110_loader.sh                 # Firmware loader
+├── sja1110_test.py                   # FRER test tool
+├── BINARY_ANALYSIS.md                # Complete binary analysis
+├── FRER_Implementation_Analysis.md  # FRER technical details
+└── analysis/                         # Analysis scripts
+    ├── binary_hexdump.py            # Binary analysis tool
+    ├── sja1110_ghidra_analysis.py   # Ghidra-style analysis
+    ├── sja1110_frer_config.py       # Basic FRER config
+    └── sja1110_proper_frer_config.py # Multi-version generator
+```
+
 ## Overview
 
 This repository contains firmware binaries and tools to enable FRER on the NXP GoldVIP S32G274ARDB2 platform, configuring the SJA1110 switch to replicate frames from Port 4 to Port 2A and Port 2B.
@@ -136,6 +153,38 @@ The firmware modifies the original GoldVIP binaries to:
 ## License
 
 Based on NXP proprietary firmware. Use subject to NXP license terms.
+
+## Binary Analysis Summary
+
+### Original Binaries (GoldVIP-S32G2-1.14.0)
+
+| File | Size | Type | Purpose |
+|------|------|------|--------|
+| sja1110_switch.bin | 2,236 bytes | Config | Switch port/VLAN configuration |
+| sja1110_uc.bin | 320,280 bytes | ARM FW | Microcontroller firmware |
+| s32g_pfe_class.fw | 45,724 bytes | MIPS ELF | Packet classifier |
+| s32g_pfe_util.fw | 23,352 bytes | MIPS ELF | Utility functions |
+
+### Key Findings
+
+1. **Device ID**: `0xB700030F` (SJA1110 identifier)
+2. **UC Architecture**: ARM Cortex-M with Thumb-2 instructions
+3. **Image Marker**: `0x6AA66AA6` (repeated 4 times)
+4. **Port Mapping**: 11 ports (0-10), P4→P2A/P2B for FRER
+5. **Configuration Format**: 8-byte entries `[Command][Value]`
+
+### FRER Modifications
+
+| Offset | Original | Modified | Purpose |
+|--------|----------|----------|--------|
+| 0x0030 | 0x087FFF9F | 0x887FFF9F | Enable FRER on P4 |
+| 0x0020 | 0x047FFF9F | 0x847FFF9F | FRER output P2A |
+| 0x0028 | 0x067FFF9F | 0x867FFF9F | FRER output P2B |
+| 0x0100 | 0x00000000 | 0x00010001 | Stream ID 1 |
+| 0x0104 | 0x00000000 | 0x00000010 | P4 input mask |
+| 0x0108 | 0x00000000 | 0x0000000C | P2A\|P2B output |
+
+For complete binary analysis, see [BINARY_ANALYSIS.md](BINARY_ANALYSIS.md)
 
 ## Support
 
