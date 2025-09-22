@@ -50,7 +50,7 @@ class SJA1110Registers:
 
 class FRERTagFormat(IntEnum):
     """R-TAG format for redundancy tags (802.1CB)"""
-    ETHERTYPE = 0xF1CD  # R-TAG EtherType
+    ETHERTYPE = 0xF1C1  # R-TAG EtherType (IEEE 802.1CB official)
     SEQ_NUM_BITS = 16   # Sequence number size
 
 class FRERAlgorithm(IntEnum):
@@ -730,7 +730,7 @@ def main():
     print("  - Sequence generation on Port 4")
     print("  - Replication to Ports 2A (P2) and 2B (P3)")
     print("  - Elimination on egress ports")
-    print("  - R-TAG EtherType: 0xF1CD")
+    print("  - R-TAG EtherType: 0xF1C1")
     print("  - Recovery window: 256 packets")
     print("  - Timeout: 100ms")
     print()

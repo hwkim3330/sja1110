@@ -57,7 +57,7 @@ FRER is a TSN (Time-Sensitive Networking) mechanism that:
 - **Memory**: 320KB UC firmware space
 
 ### 📊 FRER Specifications
-- **R-TAG EtherType**: 0xF1CD (0xF1C1 in legacy)
+- **R-TAG EtherType**: 0xF1C1 (IEEE 802.1CB standard)
 - **Sequence Number**: 16-bit (0-65535)
 - **Recovery Window**: 256 packets
 - **Timeout**: 100ms
@@ -261,7 +261,7 @@ All checks passed:
 - [x] SEQGEN enabled
 - [x] CRC valid
 - [x] Stream table configured
-- [x] R-TAG 0xF1CD present
+- [x] R-TAG 0xF1C1 present
 - [x] L2 forwarding rules set
 - [x] MAC table configured
 - [x] VLAN table configured
