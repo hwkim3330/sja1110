@@ -332,11 +332,14 @@ MIT License - See LICENSE file for details.
 
 ---
 
-**Project Status**: 🔍 **Under Investigation** - CRC validation issues
+**Project Status**: ✅ **FRER Firmware Available**
 **Repository**: https://github.com/hwkim3330/sja1110
-**Version**: 1.0.0-beta
+**Version**: 2.0.0
 **Last Updated**: September 2024
 
-⚠️ **Current Issue**: Despite implementing NXP's exact CRC algorithm, LocalCRCfail=1 errors persist. See [Troubleshooting Guide](TROUBLESHOOTING.md) for detailed analysis and next steps.
+**Latest Release**: Three firmware versions available for testing:
+- `sja1110_switch_frer.bin` - FRER enabled with recalculated CRC (0x0c5fe410)
+- `sja1110_switch_frer_origcrc.bin` - FRER enabled with original CRC (testing)
+- `sja1110_uc_frer.bin` - Microcode firmware (unchanged from GoldVIP)
 
 **Contact**: Submit issues via GitHub repository
