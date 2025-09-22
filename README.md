@@ -332,9 +332,11 @@ MIT License - See LICENSE file for details.
 
 ---
 
-**Project Status**: ✅ **Production Ready**
+**Project Status**: 🔍 **Under Investigation** - CRC validation issues
 **Repository**: https://github.com/hwkim3330/sja1110
-**Version**: 1.0.0
+**Version**: 1.0.0-beta
 **Last Updated**: September 2024
+
+⚠️ **Current Issue**: Despite implementing NXP's exact CRC algorithm, LocalCRCfail=1 errors persist. See [Troubleshooting Guide](TROUBLESHOOTING.md) for detailed analysis and next steps.
 
 **Contact**: Submit issues via GitHub repository
