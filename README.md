@@ -8,6 +8,9 @@ Production-ready FRER firmware for NXP SJA1110 automotive Ethernet switch implem
 
 Hardware-based automatic frame replication from Port 4 to Port 2A and Port 2B.
 
+### 🆕 S32G274A-RDB2 Support Added!
+Now fully compatible with NXP S32G274A-RDB2 automotive processor board with fixed device ID and UC firmware headers.
+
 ## 📋 Table of Contents
 - [Overview](#overview)
 - [Features](#features)
@@ -103,7 +106,13 @@ sja1110/
 ├── sja1110_ultrathink_switch.bin      # Switch configuration (2.2KB)
 ├── sja1110_ultrathink_uc.bin          # Microcontroller firmware (320KB)
 ├── sja1110_switch.bin                 # Legacy switch firmware
-└── sja1110_uc.bin                     # Legacy UC firmware
+├── sja1110_uc.bin                     # Legacy UC firmware
+│
+├── S32G274A-RDB2 Support Files:
+├── sja1110_s32g_fix.py               # S32G board firmware fixer
+├── sja1110_switch_s32g.bin           # Fixed switch firmware for S32G
+├── sja1110_uc_s32g.bin              # Fixed UC firmware for S32G
+└── upload_to_s32g.sh                 # S32G board upload script
 ```
 
 ## Binary Structure (2,236 bytes)
@@ -210,19 +219,29 @@ git clone https://github.com/hwkim3330/sja1110.git
 cd sja1110
 ```
 
-2. **Generate firmware** (optional - pre-built binaries included)
+2. **For standard boards:**
 ```bash
+# Generate firmware (optional - pre-built binaries included)
 python3 sja1110_ultrathink_frer.py
-```
 
-3. **Load firmware to device**
-```bash
+# Load firmware to device
 sudo ./sja1110_ultrathink_loader.sh
+
+# Verify installation
+./verify_ultrathink_frer.sh
 ```
 
-4. **Verify installation**
+3. **For S32G274A-RDB2 boards:**
 ```bash
-./verify_ultrathink_frer.sh
+# Use pre-fixed firmware files
+scp sja1110_switch_s32g.bin root@<board-ip>:/lib/firmware/sja1110_switch.bin
+scp sja1110_uc_s32g.bin root@<board-ip>:/lib/firmware/sja1110_uc.bin
+
+# Or use the upload script
+./upload_to_s32g.sh
+
+# Reboot board
+ssh root@<board-ip> reboot
 ```
 
 ### Basic Usage
